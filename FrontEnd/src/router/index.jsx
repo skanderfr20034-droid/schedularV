@@ -4,6 +4,7 @@ import Layout from "../Layout";
 import Dashboard from "../pages/Dashboard";
 import Profile from "../pages/Profile";
 import Placeholder from "../pages/Placeholder";
+import NegotiationOngoing from "../pages/NegotiationOngoing";
 
 const router = createBrowserRouter([
     {
@@ -11,7 +12,7 @@ const router = createBrowserRouter([
         element: <Layout />,
         children: [
             { index: true,          element: <Dashboard /> },
-            { path: "negociations",  element: <Placeholder page="negociations" /> },
+            { path: "negociations",  element: <NegotiationOngoing /> },
             { path: "demandes",      element: <Placeholder page="demandes" /> },
             { path: "emplois",       element: <Placeholder page="emplois" /> },
             { path: "statistiques",  element: <Placeholder page="statistiques" /> },
