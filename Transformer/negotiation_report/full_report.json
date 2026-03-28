@@ -1,0 +1,299 @@
+{
+  "scenario": {
+    "scenario_id": "SCENARIO-93748",
+    "timestamp": "2026-03-27T17:32:13.418301",
+    "room_manager": {
+      "rooms": [
+        {
+          "room_id": "ROOM-001",
+          "capacity": 34,
+          "available_slots": [
+            "Mo-10:00",
+            "We-10:00",
+            "Tu-16:00",
+            "Tu-15:00",
+            "Tu-09:00",
+            "Mo-15:00",
+            "Mo-14:00",
+            "Th-12:00",
+            "Mo-11:00",
+            "Mo-09:00",
+            "Th-16:00",
+            "Fr-11:00",
+            "Mo-16:00",
+            "We-09:00",
+            "We-12:00",
+            "Th-15:00",
+            "Fr-15:00",
+            "Th-13:00",
+            "We-13:00",
+            "We-16:00",
+            "Tu-14:00",
+            "Fr-09:00",
+            "Fr-13:00",
+            "Fr-12:00",
+            "Th-09:00",
+            "Tu-13:00",
+            "We-14:00",
+            "Th-14:00"
+          ]
+        },
+        {
+          "room_id": "ROOM-002",
+          "capacity": 74,
+          "available_slots": [
+            "We-14:00",
+            "We-10:00",
+            "Tu-10:00",
+            "Tu-14:00",
+            "Fr-16:00",
+            "Mo-15:00",
+            "Mo-14:00",
+            "Th-09:00",
+            "Fr-11:00",
+            "Tu-12:00",
+            "Th-12:00",
+            "Th-15:00",
+            "We-12:00",
+            "Tu-09:00",
+            "Th-10:00",
+            "Mo-10:00",
+            "We-16:00",
+            "Tu-15:00",
+            "Fr-15:00",
+            "Mo-12:00",
+            "Tu-13:00",
+            "Mo-11:00",
+            "Fr-12:00",
+            "Fr-14:00",
+            "Th-13:00",
+            "We-09:00",
+            "We-13:00",
+            "Tu-16:00"
+          ]
+        },
+        {
+          "room_id": "ROOM-003",
+          "capacity": 28,
+          "available_slots": [
+            "Mo-11:00",
+            "Tu-15:00",
+            "We-11:00",
+            "Mo-14:00",
+            "Fr-15:00",
+            "Mo-15:00",
+            "Th-09:00",
+            "We-10:00",
+            "Th-14:00",
+            "We-13:00",
+            "Th-11:00",
+            "Tu-12:00",
+            "Fr-13:00",
+            "Th-13:00",
+            "Th-16:00",
+            "Fr-11:00",
+            "We-14:00",
+            "Tu-09:00",
+            "We-16:00",
+            "Th-15:00",
+            "Fr-16:00",
+            "Th-12:00",
+            "Fr-09:00",
+            "Mo-16:00",
+            "Fr-14:00",
+            "We-09:00",
+            "Fr-10:00",
+            "Mo-13:00"
+          ]
+        },
+        {
+          "room_id": "ROOM-004",
+          "capacity": 91,
+          "available_slots": [
+            "Tu-15:00",
+            "We-13:00",
+            "Mo-12:00",
+            "Fr-16:00",
+            "Mo-11:00",
+            "Fr-15:00",
+            "Th-10:00",
+            "We-10:00",
+            "Mo-13:00",
+            "Mo-15:00",
+            "Th-14:00",
+            "We-11:00",
+            "We-15:00",
+            "Tu-11:00",
+            "Th-15:00",
+            "Fr-11:00",
+            "Tu-16:00",
+            "Tu-13:00",
+            "Th-09:00",
+            "Fr-13:00",
+            "Th-16:00",
+            "Tu-09:00",
+            "We-12:00",
+            "Mo-16:00",
+            "Th-13:00",
+            "Tu-12:00",
+            "Tu-10:00",
+            "Fr-10:00"
+          ]
+        },
+        {
+          "room_id": "ROOM-005",
+          "capacity": 94,
+          "available_slots": [
+            "Th-10:00",
+            "We-16:00",
+            "Tu-15:00",
+            "Tu-09:00",
+            "Fr-09:00",
+            "Th-16:00",
+            "Mo-14:00",
+            "Mo-12:00",
+            "Mo-16:00",
+            "Mo-13:00",
+            "We-13:00",
+            "Fr-10:00",
+            "Fr-16:00",
+            "We-14:00",
+            "Tu-14:00",
+            "We-12:00",
+            "Mo-11:00",
+            "Tu-13:00",
+            "We-15:00",
+            "Th-09:00",
+            "Fr-14:00",
+            "We-09:00",
+            "Fr-13:00",
+            "Mo-09:00",
+            "Fr-12:00",
+            "Tu-11:00",
+            "We-10:00",
+            "Th-11:00"
+          ]
+        }
+      ],
+      "total_slots_available": 40
+    },
+    "teacher": {
+      "teacher_id": "T001",
+      "preferred_slots": [
+        "We-10:00",
+        "We-14:00"
+      ],
+      "unavailable_slots": [
+        "Mo-16:00",
+        "We-11:00"
+      ],
+      "min_slots_needed": 1
+    },
+    "students": {
+      "group_id": "GROUP-001",
+      "preferred_slots": [
+        "Th-12:00",
+        "Tu-11:00"
+      ],
+      "constraints": {
+        "no_early_morning": false,
+        "no_late_afternoon": true,
+        "max_days_per_week": 4,
+        "preferred_days": [
+          "Fr",
+          "Mo",
+          "We"
+        ]
+      }
+    },
+    "all_possible_slots": [
+      "Mo-09:00",
+      "Mo-10:00",
+      "Mo-11:00",
+      "Mo-12:00",
+      "Mo-13:00",
+      "Mo-14:00",
+      "Mo-15:00",
+      "Mo-16:00",
+      "Tu-09:00",
+      "Tu-10:00",
+      "Tu-11:00",
+      "Tu-12:00",
+      "Tu-13:00",
+      "Tu-14:00",
+      "Tu-15:00",
+      "Tu-16:00",
+      "We-09:00",
+      "We-10:00",
+      "We-11:00",
+      "We-12:00",
+      "We-13:00",
+      "We-14:00",
+      "We-15:00",
+      "We-16:00",
+      "Th-09:00",
+      "Th-10:00",
+      "Th-11:00",
+      "Th-12:00",
+      "Th-13:00",
+      "Th-14:00",
+      "Th-15:00",
+      "Th-16:00",
+      "Fr-09:00",
+      "Fr-10:00",
+      "Fr-11:00",
+      "Fr-12:00",
+      "Fr-13:00",
+      "Fr-14:00",
+      "Fr-15:00",
+      "Fr-16:00"
+    ],
+    "target_slot": "Th-16:00",
+    "difficulty": "medium"
+  },
+  "result": {
+    "final_slot": "We-14:00",
+    "final_scores": {
+      "room": 1.0,
+      "teacher": 1.0,
+      "student": 0.7,
+      "global": 0.9
+    },
+    "success": true,
+    "negotiation_rounds": [
+      {
+        "round": 1,
+        "proposed_slot": "Fr-09:00",
+        "scores": {
+          "room": 1.0,
+          "teacher": 0.6,
+          "student": 0.7,
+          "global": 0.7666666666666666
+        },
+        "explanation": "Proposed: Fr-09:00. Good compromise found. (room available, teacher acceptable, students can attend)"
+      },
+      {
+        "round": 2,
+        "proposed_slot": "Fr-09:00",
+        "scores": {
+          "room": 1.0,
+          "teacher": 0.6,
+          "student": 0.7,
+          "global": 0.7666666666666666
+        },
+        "explanation": "Proposed: Fr-09:00. Good compromise found. (room available, teacher acceptable, students can attend)"
+      },
+      {
+        "round": 3,
+        "proposed_slot": "We-14:00",
+        "scores": {
+          "room": 1.0,
+          "teacher": 1.0,
+          "student": 0.7,
+          "global": 0.9
+        },
+        "explanation": "Proposed: We-14:00. Excellent agreement across all agents. (room available, teacher preferred, students can attend)"
+      }
+    ]
+  }
+}

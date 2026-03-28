@@ -1,0 +1,480 @@
+{
+  "info": {
+    "_postman_id": "scheduling-transformer-api",
+    "name": "SchedulingTransformer API",
+    "description": "Complete test collection for SchedulingTransformer multi-agent negotiation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Health & Config",
+      "item": [
+        {
+          "name": "1.1 Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            },
+            "description": "Check if API is running and healthy"
+          },
+          "response": []
+        },
+        {
+          "name": "1.2 Get Configuration",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/config",
+              "host": ["{{base_url}}"],
+              "path": ["config"]
+            },
+            "description": "Get model configuration and parameters"
+          },
+          "response": []
+        },
+        {
+          "name": "1.3 Get Available Slots",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/slots",
+              "host": ["{{base_url}}"],
+              "path": ["slots"]
+            },
+            "description": "Get all available time slots (5 days × 8 hours = 40 slots)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Scenario Generation",
+      "item": [
+        {
+          "name": "2.1 Generate Easy Scenario",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/generate-scenario?difficulty=easy",
+              "host": ["{{base_url}}"],
+              "path": ["generate-scenario"],
+              "query": [
+                {
+                  "key": "difficulty",
+                  "value": "easy"
+                }
+              ]
+            },
+            "description": "Generate easy scenario (lots of overlapping preferences)"
+          },
+          "response": []
+        },
+        {
+          "name": "2.2 Generate Medium Scenario",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/generate-scenario?difficulty=medium",
+              "host": ["{{base_url}}"],
+              "path": ["generate-scenario"],
+              "query": [
+                {
+                  "key": "difficulty",
+                  "value": "medium"
+                }
+              ]
+            },
+            "description": "Generate medium difficulty scenario (realistic conflicts)"
+          },
+          "response": []
+        },
+        {
+          "name": "2.3 Generate Hard Scenario",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/generate-scenario?difficulty=hard",
+              "host": ["{{base_url}}"],
+              "path": ["generate-scenario"],
+              "query": [
+                {
+                  "key": "difficulty",
+                  "value": "hard"
+                }
+              ]
+            },
+            "description": "Generate hard scenario (many constraints and conflicts)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Single Negotiation",
+      "item": [
+        {
+          "name": "3.1 Negotiate - Easy Scenario",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// First generate a scenario",
+                  "pm.sendRequest({",
+                  "    url: pm.environment.get('base_url') + '/generate-scenario?difficulty=easy',",
+                  "    method: 'POST'",
+                  "}, function(err, response) {",
+                  "    if (!err) {",
+                  "        pm.environment.set('easy_scenario', response.json());",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{easy_scenario}}"
+            },
+            "url": {
+              "raw": "{{base_url}}/negotiate",
+              "host": ["{{base_url}}"],
+              "path": ["negotiate"]
+            },
+            "description": "Run negotiation on easy scenario"
+          },
+          "response": []
+        },
+        {
+          "name": "3.2 Negotiate - Medium Scenario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scenario_id\": \"{{scenario_id}}\",\n  \"timestamp\": \"{{timestamp}}\",\n  \"difficulty\": \"medium\",\n  \"room_manager\": {\n    \"rooms\": \"{{rooms}}\",\n    \"total_slots_available\": 40\n  },\n  \"teacher\": \"{{teacher}}\",\n  \"students\": \"{{students}}\",\n  \"all_possible_slots\": \"{{slots}}\",\n  \"target_slot\": \"{{target_slot}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/negotiate",
+              "host": ["{{base_url}}"],
+              "path": ["negotiate"]
+            },
+            "description": "Run negotiation on medium scenario - Use scenario from 2.2"
+          },
+          "response": []
+        },
+        {
+          "name": "3.3 Negotiate - Hard Scenario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scenario_id\": \"{{scenario_id}}\",\n  \"timestamp\": \"{{timestamp}}\",\n  \"difficulty\": \"hard\",\n  \"room_manager\": \"{{room_manager}}\",\n  \"teacher\": \"{{teacher}}\",\n  \"students\": \"{{students}}\",\n  \"all_possible_slots\": \"{{slots}}\",\n  \"target_slot\": \"{{target_slot}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/negotiate",
+              "host": ["{{base_url}}"],
+              "path": ["negotiate"]
+            },
+            "description": "Run negotiation on hard scenario - Use scenario from 2.3"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. Detailed Explanation",
+      "item": [
+        {
+          "name": "4.1 Explain Decision - Easy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scenario_id\": \"{{scenario_id}}\",\n  \"timestamp\": \"{{timestamp}}\",\n  \"difficulty\": \"easy\",\n  \"room_manager\": \"{{room_manager}}\",\n  \"teacher\": \"{{teacher}}\",\n  \"students\": \"{{students}}\",\n  \"all_possible_slots\": \"{{slots}}\",\n  \"target_slot\": \"{{target_slot}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/explain-decision",
+              "host": ["{{base_url}}"],
+              "path": ["explain-decision"]
+            },
+            "description": "Get detailed explanation with attention patterns - Use easy scenario"
+          },
+          "response": []
+        },
+        {
+          "name": "4.2 Explain Decision - Medium",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scenario_id\": \"{{scenario_id}}\",\n  \"timestamp\": \"{{timestamp}}\",\n  \"difficulty\": \"medium\",\n  \"room_manager\": \"{{room_manager}}\",\n  \"teacher\": \"{{teacher}}\",\n  \"students\": \"{{students}}\",\n  \"all_possible_slots\": \"{{slots}}\",\n  \"target_slot\": \"{{target_slot}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/explain-decision",
+              "host": ["{{base_url}}"],
+              "path": ["explain-decision"]
+            },
+            "description": "Get detailed explanation with attention patterns - Use medium scenario"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. Batch Operations",
+      "item": [
+        {
+          "name": "5.1 Batch Negotiate - 3 Easy Scenarios",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  \"{{scenario_1}}\",\n  \"{{scenario_2}}\",\n  \"{{scenario_3}}\"\n]"
+            },
+            "url": {
+              "raw": "{{base_url}}/batch-negotiate",
+              "host": ["{{base_url}}"],
+              "path": ["batch-negotiate"]
+            },
+            "description": "Run negotiation on multiple scenarios at once. First generate 3 easy scenarios using 2.1"
+          },
+          "response": []
+        },
+        {
+          "name": "5.2 Batch Negotiate - Mixed Difficulty",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  \"{{easy_scenario}}\",\n  \"{{medium_scenario}}\",\n  \"{{hard_scenario}}\"\n]"
+            },
+            "url": {
+              "raw": "{{base_url}}/batch-negotiate",
+              "host": ["{{base_url}}"],
+              "path": ["batch-negotiate"]
+            },
+            "description": "Batch negotiate with scenarios of different difficulties"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6. Error Cases & Edge Cases",
+      "item": [
+        {
+          "name": "6.1 Invalid Difficulty",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/generate-scenario?difficulty=impossible",
+              "host": ["{{base_url}}"],
+              "path": ["generate-scenario"],
+              "query": [
+                {
+                  "key": "difficulty",
+                  "value": "impossible"
+                }
+              ]
+            },
+            "description": "Test error handling with invalid difficulty parameter (should return 400)"
+          },
+          "response": []
+        },
+        {
+          "name": "6.2 Invalid Scenario Format",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"invalid\": \"data\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/negotiate",
+              "host": ["{{base_url}}"],
+              "path": ["negotiate"]
+            },
+            "description": "Test error handling with invalid scenario format (should return 400 or 500)"
+          },
+          "response": []
+        },
+        {
+          "name": "6.3 Empty Batch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[]"
+            },
+            "url": {
+              "raw": "{{base_url}}/batch-negotiate",
+              "host": ["{{base_url}}"],
+              "path": ["batch-negotiate"]
+            },
+            "description": "Test batch with empty list"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "7. Performance Tests",
+      "item": [
+        {
+          "name": "7.1 Single Request Performance",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{medium_scenario}}"
+            },
+            "url": {
+              "raw": "{{base_url}}/negotiate",
+              "host": ["{{base_url}}"],
+              "path": ["negotiate"]
+            },
+            "description": "Time how long a single negotiation takes (should be <100ms)"
+          },
+          "response": []
+        },
+        {
+          "name": "7.2 Batch Performance - 10 Scenarios",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  \"{{s1}}\", \"{{s2}}\", \"{{s3}}\", \"{{s4}}\", \"{{s5}}\",\n  \"{{s6}}\", \"{{s7}}\", \"{{s8}}\", \"{{s9}}\", \"{{s10}}\"\n]"
+            },
+            "url": {
+              "raw": "{{base_url}}/batch-negotiate",
+              "host": ["{{base_url}}"],
+              "path": ["batch-negotiate"]
+            },
+            "description": "Test batch performance with 10 scenarios"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "scenario_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "timestamp",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "room_manager",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "teacher",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "students",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "slots",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "target_slot",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
